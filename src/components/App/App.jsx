@@ -1,7 +1,8 @@
-import React from 'react';
-import ContactForm from '../ContactForm';
-import ContactList from '../ContactList';
-import Filter from '../Filter';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import UserMenu from 'components/UserMenu';
+import { current } from 'redux/auth/auth-operations';
 import s from './App.module.css';
 
 export default function App() {

@@ -2,18 +2,18 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-// import { initialState } from './initialState';
-import s from './LoginForm.module.css';
+import s from './RegisterForm.module.css';
 
 const schema = yup
   .object()
   .shape({
+    name: yup.string().required(),
     email: yup.string().required(),
     password: yup.string().required(),
   })
   .required();
 
-const LoginForm = ({ onSubmit }) => {
+const RegisterForm = ({ onSubmit }) => {
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
@@ -21,7 +21,15 @@ const LoginForm = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={s.group}>
-        <label className={s.label}>User email</label>
+        <label className={s.label}>Enter your name</label>
+        <input
+          {...register('name')}
+          className={s.input}
+          placeholder="Enter your name"
+        />
+      </div>
+      <div className={s.group}>
+        <label className={s.label}>Enter your email</label>
         <input
           {...register('email')}
           className={s.input}
@@ -29,7 +37,7 @@ const LoginForm = ({ onSubmit }) => {
         />
       </div>
       <div className={s.group}>
-        <label className={s.label}>User password</label>
+        <label className={s.label}>Enter your password</label>
         <input
           {...register('password')}
           className={s.input}
@@ -37,10 +45,10 @@ const LoginForm = ({ onSubmit }) => {
         />
       </div>
       <div className={s.group}>
-        <button className={s.button}>Login</button>
+        <button className={s.button}>Register</button>
       </div>
     </form>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
