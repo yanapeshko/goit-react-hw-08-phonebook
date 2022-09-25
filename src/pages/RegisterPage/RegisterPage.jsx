@@ -1,11 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-import LoginForm from 'components/LoginForm';
+import RegisterForm from 'components/RegisterForm';
 import { signup } from 'redux/auth/auth-operations';
 import { getAuthError } from 'redux/auth/auth-selectors';
 import s from './RegisterPage.module.css';
 
-const RegisterPage = () => {
+function RegisterPage() {
   const dispatch = useDispatch();
   const { status, message } = useSelector(getAuthError);
 
@@ -15,10 +15,10 @@ const RegisterPage = () => {
   return (
     <div className={s.container}>
       <h2>Login Page</h2>
-      <LoginForm onSubmit={onRegister} />
+      <RegisterForm onSubmit={onRegister} />
       {status && <p className={s.text}>{message} </p>}
     </div>
   );
-};
+}
 
 export default RegisterPage;

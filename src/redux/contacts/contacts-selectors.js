@@ -12,6 +12,7 @@
 //     );
 //   }
 // );
+export const getLoading = state => state.contacts.loading;
 
 export const getContacts = ({ contacts }) => contacts.items;
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import {
   addContact,
-  fetchContacts,
+  // fetchContacts,
 } from '../../redux/contacts/contacts-operations';
 import s from './ContactForm.module.css';
 
@@ -14,9 +14,9 @@ export default function ContactForm({ onSubmit }) {
   const [phone, setPhone] = useState('');
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchContacts());
+  // }, [dispatch]);
 
   const handleChange = ({ currentTarget: { name, value } }) => {
     name === 'name' ? setName(value) : setPhone(value);
