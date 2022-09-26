@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 import {
   addContact,
   fetchContacts,
-} from '../../redux/contacts/contacts-operations';
+} from '../../../redux/contacts/contacts-operations';
 import s from './ContactForm.module.css';
 
 export default function ContactForm({ onSubmit }) {

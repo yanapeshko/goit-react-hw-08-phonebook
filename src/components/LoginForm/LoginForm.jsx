@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-// import { initialState } from './initialState';
 import s from './LoginForm.module.css';
 
 const schema = yup
@@ -17,7 +16,7 @@ const LoginForm = ({ onSubmit }) => {
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
-  //   const { email, password } = state;
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={s.group}>
