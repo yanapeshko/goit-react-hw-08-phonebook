@@ -1,24 +1,27 @@
-import { Link } from 'react-router-dom';
-
-import Menu from './Menu';
-import Auth from './Auth';
-import User from './User';
-import useAuth from 'shared/hooks/useAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import defaultAvatar from '../../images/avatar.png';
+import { useLogoutMutation } from 'shared/authAPI';
+import { getUsername } from 'redux/auth/auth-slice';
 import s from './UserMenu.module.css';
 
-import React from 'react';
+export const UserMenu = () => {
+  const dispatch = useDispatch();
+  const name = useSelector(getUsername);
+  const [logOut] = useLogoutMutation();
 
-const UserMenu = () => {
-  const isLogin = useAuth();
+  const avatar = defaultAvatar;
+
   return (
-    <div className={s.wrapper}>
-      <Link className={s.logo} to="/">
-        Phonebook
-      </Link>
-      {isLogin && <Menu />}
-      {isLogin ? <User /> : <Auth />}
+    <div className={s.container}>
+      <img src={avatar} alt="" width="32" className={s.avatar} />
+      <span className={s.name}>Hello, {name}</span>
+      <button
+        className={s.button}
+        type="button"
+        onClick={() => dispatch(logOut())}
+      >
+        LogOut
+      </button>
     </div>
   );
 };
-
-export default UserMenu;

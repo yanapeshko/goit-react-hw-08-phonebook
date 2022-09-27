@@ -1,0 +1,19 @@
+.itemContact {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 600px;
+}
+
+.text {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.button {
+  min-width: 100px;
+  height: 30px;
+  padding: 5px;
+  margin-left: 10px;
+}

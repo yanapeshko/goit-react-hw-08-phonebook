@@ -1,43 +1,40 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { PropTypes } from 'prop-types';
-
-import { removeContact } from '../../redux/contacts/contacts-operations.js';
-import { getFilteredContacts } from '../../redux/contacts/contacts-selectors.js';
+import PropTypes from 'prop-types';
+import { nanoid } from 'nanoid';
+import { useSelector } from 'react-redux';
+import { ContactItem } from './ContactItem/ContactItem';
 import s from './ContactList.module.css';
 
-function ContactList() {
-  const visibleContacts = useSelector(getFilteredContacts);
-  const dispatch = useDispatch();
+export const ContactList = ({ contacts }) => {
+  const data = useSelector(state => state.filter.value);
+  const normalizedFilter = data.toLowerCase();
 
-  const contactsList = visibleContacts.map(({ id, name, phone }) => (
-    <li className={s.item} key={id}>
-      <div>
-        <span className={s.item_text}>
-          {name}: {phone}
-        </span>
-        <button
-          className={s.item_button}
-          id={id}
-          type="button"
-          onClick={() => dispatch(removeContact(id))}
-        >
-          Delete
-        </button>
-      </div>
-    </li>
-  ));
+  const onFilter = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
 
-  return <ul className={s.list}>{contactsList}</ul>;
-}
-
-ContactList.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      phone: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+  return (
+    <>
+      {contacts.length > 0 && (
+        <ul className={s.list}>
+          {onFilter().map(({ name, number, id }) => {
+            return (
+              <ContactItem key={nanoid()} name={name} number={number} id={id} />
+            );
+          })}
+        </ul>
+      )}
+    </>
+  );
 };
 
-export default ContactList;
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+    })
+  ),
+};

@@ -1,77 +1,51 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-import { signup, login, logout, current } from './auth-operations.js';
+import { authAPI } from '../../shared/authAPI';
 
 const initialState = {
-  user: {},
-  isLogin: false,
-  token: '',
-  loading: false,
+  user: { name: null, email: null },
+  token: null,
+  isLoggedIn: false,
   error: null,
 };
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  extraReducers: {
-    [signup.pending]: store => {
-      store.loading = true;
-      store.error = null;
-    },
-    [signup.fulfilled]: (store, { payload }) => {
-      store.loading = false;
-      store.user = payload.user;
-      store.token = payload.token;
-      store.isLogin = true;
-    },
-    [signup.rejected]: (store, { payload }) => {
-      store.loading = false;
-      store.error = payload;
-    },
-    [login.pending]: store => {
-      store.loading = true;
-      store.error = null;
-    },
-    [login.fulfilled]: (store, { payload }) => {
-      store.loading = false;
-      store.user = payload.user;
-      store.token = payload.token;
-      store.isLogin = true;
-    },
-    [login.rejected]: (store, { payload }) => {
-      store.loading = false;
-      store.error = payload;
-    },
-    [logout.pending]: store => {
-      store.loading = true;
-      store.error = null;
-    },
-    [logout.fulfilled]: store => {
-      store.loading = false;
-      store.user = {};
-      store.token = '';
-      store.isLogin = false;
-    },
-    [logout.rejected]: (store, { payload }) => {
-      store.loading = false;
-      store.error = payload;
-    },
-    [current.pending]: store => {
-      store.loading = true;
-      store.error = null;
-    },
-    [current.fulfilled]: (store, { payload }) => {
-      store.loading = false;
-      store.user = payload;
-      store.token = payload.token;
-      store.isLogin = true;
-    },
-    [current.rejected]: (store, { payload }) => {
-      store.loading = false;
-      store.token = '';
-      store.error = payload;
-    },
+  extraReducers: builder => {
+    builder.addMatcher(
+      authAPI.endpoints.register.matchFulfilled,
+      (state, { payload }) => {
+        state.token = payload.token;
+        state.user = payload.user;
+        state.isLoggedIn = true;
+      }
+    );
+    builder.addMatcher(
+      authAPI.endpoints.login.matchFulfilled,
+      (state, { payload }) => {
+        state.token = payload.token;
+        state.user = payload.user;
+        state.isLoggedIn = true;
+      }
+    );
+    builder.addMatcher(authAPI.endpoints.logout.matchFulfilled, (state, _) => {
+      state.token = null;
+      state.user.name = null;
+      state.user.email = null;
+      state.isLoggedIn = false;
+    });
+    builder.addMatcher(
+      authAPI.endpoints.fetchCurrentUser.matchFulfilled,
+      (state, { payload }) => {
+        state.user = payload;
+        state.isLoggedIn = true;
+      }
+    );
   },
 });
+
+export const getIsLoggedIn = state => state.auth.isLoggedIn;
+export const getUsername = state => state.auth.user.name;
+export const getToken = state => state.auth.token;
 
 export default authSlice.reducer;
