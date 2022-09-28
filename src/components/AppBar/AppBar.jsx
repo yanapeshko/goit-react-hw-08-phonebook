@@ -14,6 +14,7 @@ export const AppBar = () => {
     <Toolbar>
       <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
         <header className={s.header}>
+          <h1>Phonebook</h1>
           <Navigation />
           {isLogin ? <UserMenu /> : <AuthNav />}
         </header>

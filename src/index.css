@@ -1,7 +1,7 @@
 @import-normalize; /* bring in normalize.css styles */
 
 body {
-  margin: 30px 100px;
+  /* margin: 30px 100px; */
   background-image: linear-gradient(
       rgba(219, 231, 83, 0.841),
       rgba(38, 206, 236, 0.878)
