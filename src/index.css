@@ -2,8 +2,14 @@
 
 body {
   margin: 30px 100px;
+  background-image: linear-gradient(
+      rgba(219, 231, 83, 0.841),
+      rgba(38, 206, 236, 0.878)
+    ),
+    url('./images/bcg.jpg');
+  background-size: cover;
+  background-repeat: repeat-y;
 
-  background-color: rgba(201, 142, 156, 0.2);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

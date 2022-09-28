@@ -1,12 +1,26 @@
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import { useState } from 'react';
+import {
+  Container,
+  Typography,
+  TextField,
+  FormControl,
+  Button,
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useLoginMutation } from 'shared/authAPI';
-import s from './Login.module.css';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [logIn] = useLoginMutation();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const hanleSubmit = ev => {
     ev.preventDefault();
@@ -14,7 +28,7 @@ export const Login = () => {
     setEmail('');
     setPassword('');
   };
-  function handleInputChange({ target: { name, value } }) {
+  function handleChange({ target: { name, value } }) {
     switch (name) {
       case 'email':
         setEmail(value);
@@ -28,33 +42,62 @@ export const Login = () => {
   }
   return (
     <>
-      <form onSubmit={hanleSubmit} className={s.form}>
-        <label id={nanoid()} className={s.label}>
-          Email
-          <input
-            type="text"
+      <Container>
+        <FormControl
+          component="form"
+          onSubmit={hanleSubmit}
+          sx={{
+            marginTop: 20,
+          }}
+          variant="outlined"
+          margin="normal"
+        >
+          <Typography variant="h3" component="h3">
+            Login
+          </Typography>
+
+          <TextField
+            type="emailt"
             name="email"
             value={email}
-            onChange={handleInputChange}
-            className={s.input}
+            onChange={handleChange}
+            id="outlined-email"
+            label="Email"
+            variant="outlined"
+            margin="normal"
             required
           />
-        </label>
-        <label id={nanoid()} className={s.label}>
-          Password
-          <input
-            type="text"
+
+          <TextField
+            type={showPassword ? 'text' : 'password'}
             name="password"
             value={password}
-            onChange={handleInputChange}
-            className={s.input}
+            onChange={handleChange}
+            id="outlined-password-input"
+            label="Password"
+            autoComplete="current-password"
+            margin="normal"
             required
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
-        </label>
-        <button type="submit" className={s.button}>
-          Login
-        </button>
-      </form>
+
+          <Button type="submit" variant="contained">
+            Login
+          </Button>
+        </FormControl>
+      </Container>
     </>
   );
 };

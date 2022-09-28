@@ -26,21 +26,11 @@ export default function ContactForm() {
     return createContact(newContact).unwrap();
   };
 
-  function handleInputChange(e) {
-    const { name, value } = e.currentTarget;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-      default:
-        return;
-    }
-  }
+  const handleChange = ({ currentTarget: { name, value } }) => {
+    name === 'name' ? setName(value) : setNumber(value);
+  };
 
-  const reset = () => {
+  const resetState = () => {
     setName('');
     setNumber('');
   };
@@ -48,7 +38,7 @@ export default function ContactForm() {
   const handelSubmit = e => {
     e.preventDefault();
     onSubmitForm({ name, number });
-    reset();
+    resetState();
   };
 
   return (
@@ -62,7 +52,7 @@ export default function ContactForm() {
             type="text"
             name="name"
             value={name}
-            onChange={handleInputChange}
+            onChange={handleChange}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
@@ -71,10 +61,11 @@ export default function ContactForm() {
         <label id={nanoid()} name="phone" className={s.label}>
           Phone
           <input
+            className={s.input}
             type="tel"
             name="number"
             value={number}
-            onChange={handleInputChange}
+            onChange={handleChange}
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required

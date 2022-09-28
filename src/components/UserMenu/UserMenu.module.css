@@ -1,16 +1,4 @@
-.button {
-  width: 150px;
-  padding: 5px;
-}
-.container {
-  display: flex;
-  align-items: center;
-}
 .avatar {
   margin-right: 4px;
   border-radius: 50%;
-}
-.name {
-  font-weight: 700;
-  margin-right: 12px;
 }
